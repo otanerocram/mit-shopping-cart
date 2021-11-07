@@ -12,7 +12,7 @@ function ShoppingCart({availableItems}) {
   const moveToCart = (e) => {
     // TODO: create product and numInStock variables
     const [product, numInStock]= e.target.innerHTML.split(":");
-    console.log(`product  ${product}, numInStock  ${numInStock}`);
+    // console.log(`product  ${product}, numInStock  ${numInStock}`);
     
     // TODO: Determine if numInStock is greater than 0. If not, find the product that was clicked and update its numInStock
     if (parseInt(numInStock)===0){
@@ -20,7 +20,6 @@ function ShoppingCart({availableItems}) {
     }
 
     // TODO: Update the stock state to include the new stock
-
     let newStock = stock.map( (elem, idx) => {
       if (elem.product === product) elem.inStock--
       return elem
@@ -29,7 +28,8 @@ function ShoppingCart({availableItems}) {
     setStock(newStock);
     
     // TODO: Update the cart state to include the updated item
-    setCart([...cart, {product: product}])
+    let item = stock.filter(e => e.product===product);
+    setCart([...cart, ...item]);
   };
 
   // No need to update code beyond this point
@@ -54,8 +54,6 @@ function ShoppingCart({availableItems}) {
 
 function Cart({ cartitems }) {
   //const { Button } = ReactBootstrap;
-  console.log('rendering Cart');
-  console.log(cartitems);
   const availableItemsButtons = cartitems.map((item, index) => {
     return (
       <Button variant="info" id={item.product} key={index}>
